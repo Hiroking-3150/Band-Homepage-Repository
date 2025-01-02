@@ -7,6 +7,7 @@
     </head>
     <body>
         <h1>Member's Blog</h1>
+        <a href='/blogs/create'>Create Page</a>
         <div class='blogs'>
             @foreach ($blogs as $blog)
                 <div class='blog'>
