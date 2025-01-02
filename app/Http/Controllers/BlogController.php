@@ -9,7 +9,12 @@ class BlogController extends Controller
 {
     public function index(Blog $blog)
     {
-        return $blog->get();
+        return view('blogs.index')->with(['blogs' =>  $blog->getPaginateByLimit(3)]);
+    }
+
+    public function show(Blog $blog)
+    {
+        return view('blogs.show')->with(['blog' => $blog]);
     }
 }
 
