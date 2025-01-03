@@ -15,10 +15,11 @@ use App\Http\Controllers\BlogController;
 */
 
 
-Route::get('/', [BlogController::class, 'index']);
+
 Route::get('/blogs', [BlogController::class, 'index']);
 Route::get('/blogs/create', [BlogController::class, 'create']);
 Route::get('/blogs/{blog}', [BlogController::class,'show']);
 Route::post('/blogs',[BlogController::class, 'store']);
 Route::get('/blogs/{blog}/edit', [BlogController::class, 'edit']);
 Route::put('/blogs/{blog}', [BlogController::class, 'update']);
+Route::delete('/blogs/{blog}', [BlogController::class, 'delete']);
