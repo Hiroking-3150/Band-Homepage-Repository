@@ -42,6 +42,12 @@ class BlogController extends Controller
 
         return redirect('/blogs/' . $blog->id);
     }
+
+    public function delete(Blog $blog)
+    {
+        $blog->delete();
+        return redirect('/blogs');
+    }
 }
 
 ?>
