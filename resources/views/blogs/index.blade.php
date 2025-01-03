@@ -6,7 +6,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     </head>
     <body>
-        <h1>Member's Blog</h1>
+        <h1>ブログ一覧画面</h1>
         <a href='/blogs/create'>Create Page</a>
         <div class='blogs'>
             @foreach ($blogs as $blog)
