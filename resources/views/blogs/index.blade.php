@@ -26,6 +26,9 @@
         <div class='paginate'>
             {{ $blogs->links() }}
         </div>
+        <div class="footer">
+            <a href="/">トップページへ戻る</a>
+        </div>
 
         <script>
             function deleteBlog(id) {
