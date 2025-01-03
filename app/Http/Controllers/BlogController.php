@@ -29,6 +29,19 @@ class BlogController extends Controller
         $blog->fill($input)->save();
         return redirect('/blogs/' . $blog->id);
     }
+
+    public function edit(Blog $blog)
+    {
+        return view('blogs.edit')->with(['blog' => $blog]);
+    }
+
+    public function update(BlogRequest $request, Blog $blog)
+    {
+        $input_blog = $request['blog'];
+        $blog->fill($input_blog)->save();
+
+        return redirect('/blogs/' . $blog->id);
+    }
 }
 
 ?>
