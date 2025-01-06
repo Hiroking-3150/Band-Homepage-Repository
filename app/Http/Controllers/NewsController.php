@@ -11,4 +11,22 @@ class NewsController extends Controller
     {
         return $news->get();
     }
+
+    public function store(Request $request)
+    {
+
+        $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required',
+            'schedules_id' => 'nullable|integer', // スケジュールIDは任意
+        ]);
+
+        News::create([
+            'title' => $request->title,
+            'body' => $request->body,
+            'schedules_id' => $request->schedules_id,
+        ]);
+
+        return redirect('/');
+    }
 }
