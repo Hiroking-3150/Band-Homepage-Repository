@@ -10,6 +10,11 @@
         <h1 class="title">
             {{ $blog->title }}
         </h1>
+
+        <p class="author">
+        作成者：<a href="">{{ $blog->user->name }}</a>
+        </p>
+        
         <div class="content">
             <div class="content__blog">
                 <h3>本文</h3>

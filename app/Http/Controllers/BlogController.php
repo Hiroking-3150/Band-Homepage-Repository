@@ -19,9 +19,9 @@ class BlogController extends Controller
         return view('blogs.show')->with(['blog' => $blog]);
     }
 
-    public function create()
+    public function create(User $user)
     {
-        return view('blogs.create');
+        return view('blogs.create')->with(['users' => $user->get()]);
     }
 
     public function store(Blog $blog, BlogRequest $request)
