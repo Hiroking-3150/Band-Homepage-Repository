@@ -14,12 +14,15 @@
                     <h2 class='title'>
                         <a href="/blogs/{{ $blog->id }}">{{ $blog->title }}</a>
                     </h2>
-                        <p class='body'>{{ $blog->body }}</p>
-                        <form action="/blogs/{{ $blog->id }}" id="form_{{ $blog->id }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="button" onclick="deleteBlog({{ $blog->id }})">delete</button>
-                        </form>
+                    <p class="auther">
+                        作成者：<a href="">{{ $blog->user->name }}</a>
+                    </p>
+                    <p class='body'>{{ $blog->body }}</p>
+                    <form action="/blogs/{{ $blog->id }}" id="form_{{ $blog->id }}" method="post">
+                         @csrf
+                         @method('DELETE')
+                        <button type="button" onclick="deleteBlog({{ $blog->id }})">delete</button>
+                    </form>
                 </div>
             @endforeach
         </div>

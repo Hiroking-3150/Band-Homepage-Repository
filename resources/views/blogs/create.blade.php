@@ -8,6 +8,15 @@
         <h1>ブログ新規作成画面</h1>
         <form action="/blogs" method="POST">
             @csrf
+            <div class="user">
+                <h2>作成者</h2>
+                <select name="blog[users_id]" required>
+                <option value="" disabled selected>ユーザーを選択してください</option>
+                    @foreach($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="title">
                 <h2>タイトル</h2>
                 <input type="text" name="blog[title]" placeholder="Enter the title" value="{{ old('blog.title') }}"/>
