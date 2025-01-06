@@ -18,6 +18,7 @@ use App\Http\Controllers\NewsController;
 
 
 Route::get('/', [TopController::class, 'top']);
+Route::post('/news', [TopController::class, 'store']);
 Route::get('/blogs', [BlogController::class, 'index']);
 Route::get('/blogs/create', [BlogController::class, 'create']);
 Route::get('/blogs/{blog}', [BlogController::class,'show']);
