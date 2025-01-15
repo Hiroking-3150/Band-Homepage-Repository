@@ -27,10 +27,10 @@
                 <textarea name="blog[body]" placeholder="Please enter the text of your blog" value="{{ old('blog.body') }}"></textarea>
                 <p class="body_error" style="color:red">{{ $errors->first('blog.body') }}</p>
             </div>
-            <input type="submit" value="store"/>
+            <input type="submit" value="保存"/>
         </form>
         <div class="footer">
-            <a href="/blogs">戻る</a>
+            <a href="/dashboard">戻る</a>
         </div>
     </body>
 </html>
