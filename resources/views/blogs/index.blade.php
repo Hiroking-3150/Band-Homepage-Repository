@@ -7,7 +7,11 @@
     </head>
     <body>
         <h1>ブログ一覧画面</h1>
+
+        <!-- @if(auth()->user() && auth()->user()->is_admin)
         <a href='/blogs/create'>Create Page</a>
+        @endif -->
+       
         <div class='blogs'>
             @foreach ($blogs as $blog)
                 <div class='blog'>
@@ -15,14 +19,17 @@
                         <a href="/blogs/{{ $blog->id }}">{{ $blog->title }}</a>
                     </h2>
                     <p class="auther">
-                        作成者：<a href="">{{ $blog->user->name }}</a>
+                        作成者：<a href="">{{ $blog->user ? $blog->user->name : '不明' }}</a>
                     </p>
                     <p class='body'>{{ $blog->body }}</p>
+                   
+                    @if(auth()->user() && auth()->user()->is_admin)
                     <form action="/blogs/{{ $blog->id }}" id="form_{{ $blog->id }}" method="post">
                          @csrf
                          @method('DELETE')
                         <button type="button" onclick="deleteBlog({{ $blog->id }})">delete</button>
                     </form>
+                    @endif  <!-- ここを追加 -->
                 </div>
             @endforeach
         </div>

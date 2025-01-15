@@ -9,6 +9,13 @@ use App\Models\User;
 
 class BlogController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->only(['create', 'store', 'edit', 'update', 'destroy']);
+    }
+    
+    
     public function index(Blog $blog)
     {
         return view('blogs.index')->with(['blogs' =>  $blog->getPaginateByLimit(3)]);
@@ -19,16 +26,28 @@ class BlogController extends Controller
         return view('blogs.show')->with(['blog' => $blog]);
     }
 
-    public function create(User $user)
+    public function create()
     {
-        return view('blogs.create')->with(['users' => $user->get()]);
+        $user = User::all();
+        // dd($user);
+        return view('blogs.create')->with(['users' => $user]);
     }
 
-    public function store(Blog $blog, BlogRequest $request)
+    public function store(BlogRequest $request)
     {
-        $input = $request['blog'];
-        $blog->fill($input)->save();
-        return redirect('/blogs/' . $blog->id);
+        
+        $input = $request->validated();  
+        //  dd($input);
+
+        
+        $blog = new Blog();
+        $blog->title = $input['blog']['title'];  
+        $blog->body = $input['blog']['body'];   
+        $blog->users_id = auth()->user()->id;  
+        $blog->save();
+
+        
+        return redirect()->route('blog.posted')->with('success', 'ブログが作成されました！');
     }
 
     public function edit(Blog $blog)
@@ -48,6 +67,14 @@ class BlogController extends Controller
     {
         $blog->delete();
         return redirect('/blogs');
+    }
+
+    public function destroy($id)
+    {
+        $blog = Blog::findOrFail($id); 
+        $blog->delete(); 
+
+        return redirect()->route('blogs.index');
     }
 }
 
