@@ -15,6 +15,10 @@
         @endforeach
     </ul>
 
+    <div>
+        <img src="{{ $cd->cover_image }}" alt="Comming soon..">
+    </div>
+
     <p>発売日: {{ $cd->release_date }}</p>
 
     <a href="{{ route('cds.index') }}">一覧へ戻る</a>
