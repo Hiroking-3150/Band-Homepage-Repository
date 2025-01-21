@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\CdsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,5 +79,7 @@ Route::get('/blog-posted', function () {
 // 認証なしでアクセスできるルート（ブログ一覧）
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
+Route::get('/cds', [CdsController::class, 'index'])->name('cds.index');
+Route::get('/cds/{id}', [CdsController::class, 'show'])->name('cds.show');
 
 require __DIR__.'/auth.php';
