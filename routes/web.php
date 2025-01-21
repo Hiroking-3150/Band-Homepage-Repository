@@ -72,14 +72,18 @@ Route::get('/blog-posted', function () {
     Route::put('/news/{news}', [NewsController::class, 'update'])->name('news.update');
     Route::delete('/news/{news}', [NewsController::class, 'destroy'])->name('news.destroy');
 
+    //新CD情報作成
+    Route::get('/cds/create', [CdsController::class, 'create'])->name('cds.create');
+
     // ログアウト
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
   
-// 認証なしでアクセスできるルート（ブログ一覧）
+// 認証なしでアクセスできるルート
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
-Route::get('/cds', [CdsController::class, 'index'])->name('cds.index');
+Route::get('/cds', [CdsController::class, 'index'])->name('cds.index');  
+Route::post('/cds', [CdsController::class, 'store'])->name('cds.store');
 Route::get('/cds/{id}', [CdsController::class, 'show'])->name('cds.show');
 
 require __DIR__.'/auth.php';

@@ -11,6 +11,7 @@ class Cd extends Model
 
     protected $table = 'cds';
 
+
     public function songs()
     {
         return $this->hasMany(Song::class, 'cd_id');
