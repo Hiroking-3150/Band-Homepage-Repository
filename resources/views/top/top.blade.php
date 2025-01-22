@@ -66,7 +66,7 @@
         <div class='tops'>
             <h2>ここにそれぞれのページに飛べるようにリンクを貼る</h2>
             <p><a href="/blogs">ブログ一覧</a></p>
-            <p><a href="#">ライブスケジュール</a></p>
+            <p><a href="{{ route('schedules.index') }}">ライブスケジュール</a></p>
             <p><a href="/cds">ディスコグラフィー</a></p>
         </div>
     </body>
