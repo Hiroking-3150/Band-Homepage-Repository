@@ -2,6 +2,16 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
+    server: {
+        host: 'localhost',
+        port: 5173,
+    },
+
+    build: {
+        outDir: 'public/build',
+        emptyOutDir: true,
+    },
+
     plugins: [
         laravel({
             input: [
@@ -11,4 +21,5 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+
 });

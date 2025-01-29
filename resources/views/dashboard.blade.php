@@ -15,6 +15,7 @@
             <a href="{{ route('blogs.create') }}">新しいブログを作成</a>
             <a href="{{ route('news.create') }}">ニュース作成</a>
             <a href="{{ route('cds.create') }}">CD情報作成</a>
+            <a href="{{ route('schedules.create') }}">ライブ情報作成</a>
         @else
             <p>管理者専用ページにアクセスするためにはログインが必要です。</p>
         @endif
