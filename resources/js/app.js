@@ -1,7 +1,25 @@
 import './bootstrap';
 
-import Alpine from 'alpinejs';
+import axios from 'axios';
+import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
 
-window.Alpine = Alpine;
+const calendarEl = document.getElementById("calendar");
 
-Alpine.start();
+if (calendarEl) {
+    const calendar = new Calendar(calendarEl, {
+
+        plugins: [dayGridPlugin, timeGridPlugin],
+
+        initialView: "dayGridMonth",
+        headerToolbar: {
+            start: "prev,next today",
+            center: "title",
+            end: "dayGridMonth,timeGridWeek",
+        },
+        height: "auto",
+    });
+
+    calendar.render(); // カレンダーを表示
+}

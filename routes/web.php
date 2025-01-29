@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\CdsController;
+use App\Http\Controllers\ScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +75,13 @@ Route::get('/blog-posted', function () {
 
     //新CD情報作成
     Route::get('/cds/create', [CdsController::class, 'create'])->name('cds.create');
+
+    //管理者用のライブスケジュール作成
+    Route::get('/schedules/create',[ScheduleController::class,'create'])->name('schedules.create');
+    Route::post('/schedules',[ScheduleController::class, 'store'])->name('schedules.store');
+    Route::get('/schedules/{schedule}/edit',[ScheduleController::class, 'edit'])->name('schedules.edit');
+    Route::put('/schedules/{schedule}',[ScheduleController::class,'update'])->name('schedules.update');
+    Route::delete('/schedules/{schedule}',[ScheduleController::class,'destroy'])->name('schedules.destroy');
 
     // ログアウト
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
