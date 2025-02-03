@@ -9,5 +9,5 @@ class Schedule extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['event_title', 'event_datetame', 'event_detail'];
+    protected $fillable = ['event_title', 'event_datetime', 'event_detail','event_location'];
 }

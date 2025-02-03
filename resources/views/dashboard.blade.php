@@ -8,6 +8,12 @@
     <body>
         <h1>ようこそ、管理者さん！</h1>
         <p>ここが管理者専用のダッシュボードです。</p>
+
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         
         @if(auth()->check() && auth()->user()->is_admin)
             <h2>管理者ダッシュボード</h2>

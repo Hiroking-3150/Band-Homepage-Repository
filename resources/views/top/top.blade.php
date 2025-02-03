@@ -7,7 +7,7 @@
     </head>
     <body>
         
-        <h1>バンドHP トップ</h1>
+        <h1>トップ</h1>
 
         <a href="{{ route('login') }}">ログイン</a>
 

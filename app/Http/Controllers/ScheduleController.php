@@ -9,7 +9,22 @@ class ScheduleController extends Controller
 {
     public function index()
     {
-        return view('schedules.calendar');
+        $schedules = Schedule::all();
+
+        // $events = $schedules->map(function ($schedule) {
+        $events = $schedules->filter(function ($schedule) {
+            return !empty($schedule->event_title);
+        })->map(function ($schedule) {    
+            return [
+                'id' => $schedule->id,
+                'title' => $schedule->event_title,
+                'start' => \Carbon\Carbon::parse($schedule->event_datetime)->toIso8601String(),
+                'event_location' => $schedule->event_location,
+                'event_detail'   => $schedule->event_detail,
+            ];
+        });
+
+        return view('schedules.calendar', compact('events'));
     }
 
     public function create()
@@ -19,18 +34,24 @@ class ScheduleController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
-
         $request->validate([
-            'title' => 'required|string|max:255',
-            'date' => 'required|date',
-            'description' => 'nullable|string',
+            'event_title' => 'required|string|max:255',
+            'event_datetime' => 'required|date',
+            'event_detail' => 'nullable|string',
         ]);
 
-        //Schedule::create($request->all());
-        Schedule::create($request->except('_token'));
+        $event_datetime = $request->event_datetime . ' 00:00:00';
 
-        return redirect()->route('/dashboard')->with('success', '予定が追加されました！');
+        $event_location = $request->event_location ?? '不要';
+
+        Schedule::create([
+            'event_title'    => $request->event_title,
+            'event_datetime' => $event_datetime,
+            'event_location' => $event_location, 
+            'event_detail'   => $request->event_detail,
+        ]);
+
+        return redirect()->route('dashboard')->with('success', '予定が追加されました！');
     }
 
     public function edit(Schedule $schedule)
@@ -56,5 +77,12 @@ class ScheduleController extends Controller
         $schedule->delete();
 
         return redirect()->route('/dashboard')->with('success', '予定を削除しました！');
+    }
+
+    public function show($id)
+    {
+        $schedule = Schedule::findOrFail($id);
+
+        return view('schedules.show', compact('schedule'));
     }
 }

@@ -21,5 +21,20 @@
 
     <p>発売日: {{ $cd->release_date }}</p>
 
+    @if($isAdmin)
+        <a href="{{ route('cds.edit', $cd->id) }}">編集</a>
+    @endif
+
+    <form action="{{ route('cds.destroy', $cd->id) }}" method="POST" onsubmit="return confirm('本当に削除しますか？')">
+        @csrf
+        @method('DELETE')
+
+        @if($isAdmin)
+            <button type="submit" style="background-color: red; color: white;">削除</button>
+        @endif
+    </form>
+
     <a href="{{ route('cds.index') }}">一覧へ戻る</a>
+
+</body>
 </html>
