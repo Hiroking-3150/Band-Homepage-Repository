@@ -22,8 +22,7 @@
                 <h2>カバー画像</h2>
                 <input type="file" name="cover_image" required />
             </div>
-
-            <!-- ここを追加 -->
+            
             <div class="songs">
             <h2>収録曲</h2>
             <div class="song">
@@ -32,7 +31,6 @@
             <div id="song-fields"></div>
             <button type="button" id="add-song">収録曲を追加</button>
             </div>
-            <!-- ここまで追加 -->
 
             <input type="submit" value="保存" />
         </form>

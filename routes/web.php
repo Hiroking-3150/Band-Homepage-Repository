@@ -54,7 +54,7 @@ Route::get('/blog-posted', function () {
 // 管理者専用のルート（認証＋管理者権限）
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/dashboard', function() {
-            return view('/dashboard');
+            return view('dashboard');
         })->name('dashboard');
 
     // 管理者専用のブログやニュース管理
@@ -73,8 +73,12 @@ Route::get('/blog-posted', function () {
     Route::put('/news/{news}', [NewsController::class, 'update'])->name('news.update');
     Route::delete('/news/{news}', [NewsController::class, 'destroy'])->name('news.destroy');
 
-    //新CD情報作成
+    //ディスコグラフィー
     Route::get('/cds/create', [CdsController::class, 'create'])->name('cds.create');
+    Route::get('/cds/{cd}/edit', [CdsController::class, 'edit'])->name('cds.edit');
+    Route::put('/cd/{cd}', [CdsController::class, 'update'])->name('cds.update');
+    Route::delete('/cds/{id}', [CdsController::class, 'destroy'])->name('cds.destroy');
+
 
     //管理者用のライブスケジュール作成
     Route::get('/schedules/create',[ScheduleController::class,'create'])->name('schedules.create');
@@ -94,5 +98,7 @@ Route::get('/cds', [CdsController::class, 'index'])->name('cds.index');
 Route::post('/cds', [CdsController::class, 'store'])->name('cds.store');
 Route::get('/cds/{id}', [CdsController::class, 'show'])->name('cds.show');
 Route::get('/schedules', [ScheduleController::class, 'index'])->name('schedules.index');
+Route::get('/schedules/{id}', [ScheduleController::class, 'show'])->name('schedules.show');
+// Route::get('/schedules/calendar', [ScheduleController::class, 'fetchSchedules'])->name('schedules.fetchSchedules');
 
 require __DIR__.'/auth.php';

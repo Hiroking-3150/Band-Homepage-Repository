@@ -26,7 +26,7 @@
 
             <div class="form-group">
                 <label for="event_detail">詳細</label>
-                <textarea name="devent_detail" id="event_detail" class="form-control" rows="3"></textarea>
+                <textarea name="event_detail" id="event_detail" class="form-control" rows="3"></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary mt-3">予定を追加</button>

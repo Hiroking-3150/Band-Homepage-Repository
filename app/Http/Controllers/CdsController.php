@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Cd;
 use App\Models\Song;
 use Cloudinary;
+use Cloudinary\Configuration\Environment;
+use Cloudinary\Configuration\Configuration;
 
 
 class CdsController extends Controller
@@ -34,7 +36,10 @@ class CdsController extends Controller
     public function show($id)
     {
         $cd =Cd::with('songs')->findOrFail($id);
-        return view('cds.show', ['cd' => $cd]);
+
+        $isAdmin = auth()->check() ? auth()->user()->is_admin : false;
+
+        return view('cds.show', compact('cd', 'isAdmin'));
     }
 
     public function create()
@@ -65,4 +70,78 @@ class CdsController extends Controller
 
         return redirect('/cds/' . $cd->id);
     }
+
+    public function edit($cd)
+    {
+        $cd = Cd::findOrFail($cd);
+        $songs = $cd->songs;
+
+        return view('cds.edit', compact('cd', 'songs'));
+    }
+
+    public function update(Request $request, $cd)
+    {
+        // バリデーション
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'release_date' => 'required|date',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // cdsテーブルからディスコグラフィー情報を取得
+        $cd = Cd::findOrFail($cd);
+
+        // ディスコグラフィー情報の更新
+        $cd->title = $validated['title'];
+        $cd->release_date = $validated['release_date'];
+
+        if ($request->hasFile('cover_image')) {
+            $uploadedImage = Cloudinary::upload($request->file('cover_image')->getRealPath());
+            $cd->cover_image = $uploadedImage->getSecurePath(); // Cloudinaryから返されたURLを保存
+        }
+
+        // 更新を保存
+        $cd->save();
+
+        if ($request->has('songs')) {
+            foreach ($request->songs as $index => $songData) {
+                if (isset($songData['title'])) {
+                    if (isset($cd->songs[$index])) {
+                        // 既存の曲を更新
+                        $cd->songs[$index]->title = $songData['title'];
+                        $cd->songs[$index]->save();
+                    } else {
+                        // 新しい曲を追加
+                        $cd->songs()->create([
+                            'title' => $songData['title'],
+                        ]);
+                    }
+                }
+            }
+        }
+
+        // 更新後のページにリダイレクト
+        return redirect()->route('cds.index')->with('success', 'ディスコグラフィーが更新されました');
+    }
+
+    public function destroySong($id)
+    {
+        $song = Song::findOrFail($id);
+        $song->delete();
+
+        return back();
+    }
+
+    public function destroy($id)
+    {
+        $cd = Cd::findOrFail($id);
+
+        // CDの削除
+        $cd->delete();
+
+        return redirect()->route('cds.index')->with('success', 'ディスコグラフィーが削除されました');
+    }
+
+
+
 }

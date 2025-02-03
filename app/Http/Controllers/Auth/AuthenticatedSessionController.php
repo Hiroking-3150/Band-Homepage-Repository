@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +17,10 @@ class AuthenticatedSessionController extends Controller
      */
     protected function redirectTo()
     {
-        // ログイン後に blogs ページにリダイレクト
+        // ログイン後に 管理者ページにリダイレクト
+        $redirectUrl = route('dashboard'); // リダイレクト先のURL
+        Log::info('Redirect URL: ' . $redirectUrl); 
+        
         return route('dashboard');
     }
 
@@ -27,6 +31,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
+
         return view('auth.login');
     }
 
@@ -38,16 +43,22 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(Request $request)
     {
+        \Log::info('ログイン処理開始', $request->only('email'));
+
         $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required', 'min:8'],
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {
+           
+            \Log::info('ログイン成功:', $request->only('email'));
+
             // ログイン後にリダイレクト
             return redirect()->intended($this->redirectTo());
         }
 
+        \Log::warning('ログイン失敗:', $request->only('email')); 
         return back()->withErrors(['email' => '認証に失敗しました。']);
     }
 
