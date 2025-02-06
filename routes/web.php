@@ -84,8 +84,11 @@ Route::get('/blog-posted', function () {
     Route::get('/schedules/create',[ScheduleController::class,'create'])->name('schedules.create');
     Route::post('/schedules',[ScheduleController::class, 'store'])->name('schedules.store');
     Route::get('/schedules/{schedule}/edit',[ScheduleController::class, 'edit'])->name('schedules.edit');
-    Route::put('/schedules/{schedule}',[ScheduleController::class,'update'])->name('schedules.update');
-    Route::delete('/schedules/{schedule}',[ScheduleController::class,'destroy'])->name('schedules.destroy');
+    Route::put('/schedules/{id}/update',[ScheduleController::class,'update'])->name('schedules.update');
+    Route::delete('/schedules/{id}/delete',[ScheduleController::class,'destroy'])->name('schedules.destroy');
+    Route::get('/schedules/{id}/edit', [ScheduleController::class,'edit'])->name('schedules.edit');
+    Route::get('/schedules/{id}',[ScheduleController::class,'show'])->name('schedules.show');
+    // Route::post('/schedules/{id}/delete',[ScheduleController::class,'destroy'])->name('schedules.destroy');
 
     // ログアウト
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');

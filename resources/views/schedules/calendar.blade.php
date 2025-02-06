@@ -18,26 +18,21 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 var calendarEl = document.getElementById('calendar');
-
+                console.log(@json($events, JSON_PRETTY_PRINT));
                 var events = Object.values(@json($events));
 
                 var calendar = new FullCalendar.Calendar(calendarEl, {
-                    events: events.map(function(event){
-                        return {
-                            id: event.id,
-                            title: event.title,
-                            start: event.datetime ,
-                            end: event.detail,
-                        };
-                    }),
                     initialView: 'dayGridMonth',
                     locale: 'ja',
                     eventSources: [  
                         {
                             events: events.map(function(event){
+                                // console.log(event);
                                 return {
+                                    id: event.id,
                                     title: event.title,
                                     start: event.start,
+                                    // description: event.event_detail,
                                 };
                             }),
                             color: 'blue',   
@@ -45,17 +40,18 @@
                         }
                     ],
                     eventClick: function(info) {
+                        console.log(info.event);
                         console.log('イベントがクリックされました');
-                        var eventId = info.event.id;  
-                        console.log('イベントID:', eventId);
-                        console.log('遷移先URL:', '/schedule/' + eventId);
-                        // window.location.href = '/schedules/' + eventId; 
+                        var event_id = info.event.id;  
+                        console.log('ID:', event_id);
+                        console.log('遷移先URL:', '/schedules/' + event_id);
+                        window.location.href = '/schedules/' + event_id; 
 
                     },
 
                     displayEventTime: false,
                 });
-                
+ 
                 calendar.render();
             });
         </script>
