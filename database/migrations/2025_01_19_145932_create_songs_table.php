@@ -11,9 +11,14 @@ return new class extends Migration
         Schema::create('songs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignId('cd_id')
-                  ->constrained('cds');
+            $table->unsignedBigInteger('cd_id')->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('songs', function (Blueprint $table) {
+            $table->foreign('cd_id')
+                  ->references('id')->on('cds')
+                  ->onDelete('set null'); 
         });
     }
 
