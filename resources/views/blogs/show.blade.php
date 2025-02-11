@@ -21,7 +21,11 @@
                 <p>{{ $blog->body }}</p>    
             </div>
         </div>
-        <div class="edit"><a href="/blogs/{{ $blog->id }}/edit">編集</a></div>
+        <div class="edit">
+            @if(Auth::check() && Auth::user()->is_admin)
+            <a href="/blogs/{{ $blog->id }}/edit">編集</a>
+            @endif
+        </div>
         <div class="footer">
             <a href="/blogs">戻る</a>
         </div>
